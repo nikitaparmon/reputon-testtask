@@ -5,6 +5,7 @@ import com.reputon.testtask.exception.DomainNotFoundException;
 import com.reputon.testtask.parser.ReviewParser;
 
 import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DataBufferUtils;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,7 @@ public class ReviewService {
     private final WebClient client;
     private final ReviewParser reviewParser;
 
+    @Cacheable(value = "domains")
     public Mono<ResponseEntity<ReviewDto>> getReview(String domain) {
         return client.get()
                 .uri(TRUSTPILOT_URL + domain)
