@@ -8,7 +8,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DataBufferUtils;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
@@ -25,7 +24,7 @@ public class TrustpilotReviewService implements ReviewService {
 
     @Override
     @Cacheable(value = "domains")
-    public Mono<ResponseEntity<ReviewDto>> getReview(String domain) {
+    public Mono<ReviewDto> getReview(String domain) {
         return client.get()
                 .uri(TRUSTPILOT_URL + domain)
                 .exchangeToMono(response -> {
@@ -34,8 +33,7 @@ public class TrustpilotReviewService implements ReviewService {
                                 .map(buffer -> {
                                     String string = buffer.toString(StandardCharsets.UTF_8);
                                     DataBufferUtils.release(buffer);
-                                    ReviewDto result = reviewParser.parse(string);
-                                    return ResponseEntity.ok(result);
+                                    return reviewParser.parse(string);
                                 });
                     } else {
                         return Mono.error(new DomainNotFoundException(domain));

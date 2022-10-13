@@ -19,7 +19,7 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @GetMapping(value = "/{domain}")
-    public Mono<ResponseEntity<ReviewDto>> getReview(@PathVariable String domain) {
-        return reviewService.getReview(domain);
+    public ResponseEntity<Mono<ReviewDto>> getReview(@PathVariable String domain) {
+        return ResponseEntity.ok(reviewService.getReview(domain));
     }
 }
