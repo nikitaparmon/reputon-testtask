@@ -1,13 +1,7 @@
 package com.reputon.testtask;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootTest
-class TesttaskApplicationTests {
-
-	@Test
-	void contextLoads() {
-	}
-
+@SpringBootApplication
+public class TesttaskApplicationTests {
 }
